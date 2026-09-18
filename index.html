@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+ 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -120,18 +121,79 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(to bottom,rgba(250,247,242,.52) 0%, rgba(250,247,242,.34) 48%, rgba(250,247,242,.18) 100%),
-        url("images/mandap.jpg");
+        linear-gradient(to bottom,rgba(250,247,242,.62) 0%, rgba(244,220,202,.36) 48%, rgba(250,247,242,.22) 100%),
+        url("mandap.jpg");
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
-      opacity: .18;
+      opacity: .28;
+      filter: blur(1px) saturate(.8);
+      transform: scale(1.02);
       mix-blend-mode: multiply;
       pointer-events: none;
     }
 
+    .scroll-guide {
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+.floral-corner {
+  position: absolute;
+  z-index: 0;
+  width: 130px;
+  height: 130px;
+  opacity: .55;
+  pointer-events: none;
+}
+
+.floral-corner--left {
+  top: 32px;
+  left: 20px;
+}
+
+.floral-corner--right {
+  right: 20px;
+  bottom: 32px;
+  transform: scaleX(-1);
+}
+
+.floral-corner svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.music-toggle {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(38, 55, 47, .15);
+  border-radius: 999px;
+  background: rgba(250, 247, 242, .85);
+  color: #26372F;
+  box-shadow: 0 8px 24px rgba(38, 55, 47, .12);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior:auto; }
+      .scroll-guide { animation: none;}
       *,*::before,*::after { transition-duration:.10ms !important; }
       #petal-canvas { display: none; }
     }
@@ -139,6 +201,20 @@
 </head>
 
 <body class="font-sans antialiased relative">
+
+   <audio id="wedding-music" src="wedding.mp3" loop preload="none"></audio>
+
+<button
+  id="music-toggle"
+  class="music-toggle"
+  type="button"
+  aria-label="Play wedding music"
+  aria-pressed="false"
+  title="Play wedding music"
+>
+  <i data-lucide="volume-x"></i>
+</button>
+
 
   <!-- ========================= PETAL SHOWER CANVAS ========================= -->
   <canvas id="petal-canvas" aria-hidden="true"></canvas>
@@ -199,7 +275,7 @@
         </svg>
       </div>
 
-      <h1 class="font-serif text-[4.5rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
+      <h1 class="font-serif text-[3.8rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
         Deepa <span class="mx-1 font-sans font-light text-blush sm:mx-3">&amp;</span> Sumit
       </h1>
 
@@ -233,7 +309,7 @@
         </div>
       </div>
 
-      <a href="#welcome" class="mt-12 inline-flex items-center gap-2 text-xs uppercase tracking-[.24em] text-forest/65 transition hover:text-forest">
+      <a href="#welcome" class=" scroll-guide mt-12 inline-flex items-center gap-2 text-xs uppercase tracking-[.24em] text-forest/65 transition hover:text-forest">
         Explore the celebration <i data-lucide="arrow-down" class="h-4 w-4"></i>
       </a>
     </div>
@@ -313,6 +389,46 @@
     <section id="events" class="relative bg-white px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
       
       <!-- Ground Petal Scatter Overlay Details -->
+
+      <section id="events" class="relative bg-white px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+
+  <div class="floral-corner floral-corner--left" aria-hidden="true">
+    <svg viewBox="0 0 140 140" fill="none">
+      <path
+        d="M12 126C38 92 66 55 126 14"
+        stroke="#89947D"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+
+      <circle cx="42" cy="88" r="10" fill="#D8B9AE"/>
+      <circle cx="32" cy="82" r="8" fill="#E4A89B"/>
+      <circle cx="49" cy="77" r="8" fill="#E8C7BC"/>
+      <circle cx="43" cy="83" r="4" fill="#FAF7F2"/>
+
+      <circle cx="83" cy="48" r="8" fill="#D8B9AE"/>
+      <circle cx="75" cy="42" r="6" fill="#E4A89B"/>
+      <circle cx="91" cy="40" r="6" fill="#E8C7BC"/>
+      <circle cx="83" cy="45" r="3" fill="#FAF7F2"/>
+    </svg>
+  </div>
+
+  <div class="floral-corner floral-corner--right" aria-hidden="true">
+    <svg viewBox="0 0 140 140" fill="none">
+      <path
+        d="M12 126C38 92 66 55 126 14"
+        stroke="#89947D"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+
+      <circle cx="42" cy="88" r="10" fill="#D8B9AE"/>
+      <circle cx="32" cy="82" r="8" fill="#E4A89B"/>
+      <circle cx="49" cy="77" r="8" fill="#E8C7BC"/>
+      <circle cx="43" cy="83" r="4" fill="#FAF7F2"/>
+    </svg>
+  </div>
+
       <div class="pointer-events-none absolute bottom-10 left-10 opacity-35">
         <svg width="45" height="45" viewBox="0 0 100 100" fill="#E4A89B">
           <path d="M20,30 C45,10 75,25 70,55 C65,75 35,80 20,65 Z"/>
@@ -343,7 +459,7 @@
                   <h3 class="font-serif text-3xl text-forest">Shubh Tilak</h3>
                   <p class="mt-2 text-xs uppercase tracking-[.18em] text-sage">Golden Moments</p>
                 </div>
-                <i data-lucide="sparkles" class="mt-1 h-5 w-5 shrink-0 text-blush"></i>
+                <i data-lucide="flower-2" class="mt-1 h-5 w-5 shrink-0 text-blush"></i>
               </div>
             </div>
           </article>
@@ -664,6 +780,25 @@
 
     // Initialize icons
     lucide.createIcons();
+    const music = document.getElementById("wedding-music");
+const musicToggle = document.getElementById("music-toggle");
+
+musicToggle.addEventListener("click", async () => {
+  if (music.paused) {
+    await music.play();
+    musicToggle.innerHTML = '<i data-lucide="volume-2"></i>';
+    musicToggle.setAttribute("aria-label", "Mute wedding music");
+    musicToggle.setAttribute("title", "Mute wedding music");
+    musicToggle.setAttribute("aria-pressed", "true");
+  } else {
+    music.pause();
+    musicToggle.innerHTML = '<i data-lucide="volume-x"></i>';
+    musicToggle.setAttribute("aria-label", "Play wedding music");
+    musicToggle.setAttribute("title", "Play wedding music");
+    musicToggle.setAttribute("aria-pressed", "false");
+  }
+   lucide.createIcons();
+    });
   </script>
 </body>
 </html>
