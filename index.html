@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FAF7F2">
+  <meta name="description" content="Wedding invitation for Deepa & Sumit — 24 November 2026, Vadodara, Gujarat.">
+  <title>Deepa & Sumit | Wedding Invitation</title>
+
+  <!-- Elegant serif + clean sans-serif typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory: '#FAF7F2',
+            champagne: '#E9DDCF',
+            sage: '#89947D',
+            blush: '#D8B9AE',
+            rosepetal: '#E4A89B',
+            forest: '#26372F',
+            charcoal: '#282724'
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Inter', 'Arial', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 18px 50px rgba(38,55,47,.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #FAF7F2; color: #282724; overflow-x: hidden; }
+    ::selection { background: #D8B9AE; color: #26372F; }
+
+    /* Soft natural sunlight overlay */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 50% 15%, rgba(255,250,242,0.98), rgba(250,247,242,0.85) 60%),
+        radial-gradient(circle at 15% 75%, rgba(216,185,174,0.3), transparent 45%),
+        radial-gradient(circle at 85% 25%, rgba(137,148,125,0.22), transparent 40%);
+    }
+
+    .grain {
+      background-image: radial-gradient(rgba(38,55,47,.03) .65px, transparent .65px);
+      background-size: 8px 8px;
+    }
+
+    .ornament {
+      display:flex; align-items:center; justify-content:center; gap:14px;
+    }
+    .ornament::before, .ornament::after {
+      content:""; width:62px; height:1px; background:#D8B9AE;
+    }
+
+    .reveal {
+      opacity:0;
+      transform:translateY(22px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible {
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* Falling Petals Shower Animation */
+    #petal-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* Depth of Field visual simulation */
+    .dof-foreground {
+      filter: blur(2.5px);
+      transform: scale(1.08);
+      pointer-events: none;
+    }
+    .dof-midground {
+      filter: blur(0px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { transition-duration:.10ms !important; }
+      #petal-canvas { display: none; }
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased relative">
+
+  <!-- ========================= PETAL SHOWER CANVAS ========================= -->
+  <canvas id="petal-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========================= HERO ========================= -->
+  <header id="home" class="relative min-h-screen overflow-hidden hero-bg grain">
+    
+    <!-- Midground Soft Floral Vignette (Top Right) -->
+    <div class="pointer-events-none absolute -top-12 -right-12 z-0 h-80 w-80 opacity-70 transition-transform duration-1000 md:h-[450px] md:w-[450px]">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-full w-full drop-shadow-xl">
+        <g opacity="0.85">
+          <!-- Soft Foliage Leaves -->
+          <path d="M220 180 C270 120 340 140 370 200 C340 220 270 220 220 180Z" fill="#89947D" opacity="0.65"/>
+          <path d="M260 210 C310 180 380 230 380 290 C330 280 280 260 260 210Z" fill="#6B7761" opacity="0.55"/>
+          <!-- Blooming Peony/Rose Petals -->
+          <circle cx="310" cy="170" r="48" fill="#F4EAE6" opacity="0.9"/>
+          <path d="M270 160 C260 110 330 100 350 145 C320 160 290 180 270 160Z" fill="#E8C7BC" opacity="0.8"/>
+          <path d="M300 130 C340 100 390 140 365 185 C335 170 320 150 300 130Z" fill="#D8B9AE" opacity="0.75"/>
+          <path d="M280 190 C260 230 320 250 350 210 C330 190 300 185 280 190Z" fill="#E4A89B" opacity="0.7"/>
+          <circle cx="315" cy="165" r="22" fill="#FAF7F2" opacity="0.95"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Foreground Out-of-Focus Rose & Petals (Bottom Left Depth of Field) -->
+    <div class="dof-foreground pointer-events-none absolute -bottom-16 -left-14 z-20 h-72 w-72 opacity-80 md:h-96 md:w-96">
+      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Blurred large foreground rose blooms -->
+        <circle cx="90" cy="220" r="75" fill="#E8C7BC" opacity="0.6"/>
+        <circle cx="115" cy="195" r="55" fill="#D8B9AE" opacity="0.7"/>
+        <circle cx="130" cy="180" r="35" fill="#FAF7F2" opacity="0.8"/>
+        <!-- Scattered foreground petals -->
+        <path d="M160 140 C180 120 210 130 205 155 C190 170 165 160 160 140Z" fill="#E4A89B" opacity="0.75"/>
+        <path d="M70 120 C90 105 115 120 105 138 C90 145 75 135 70 120Z" fill="#E8C7BC" opacity="0.65"/>
+      </svg>
+    </div>
+
+    <nav class="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
+      <a href="#home" class="font-serif text-xl tracking-[.18em] text-forest">D &amp; S</a>
+      <a href="#events" class="rounded-full border border-forest/15 bg-white/40 px-4 py-2 text-xs tracking-[.16em] text-forest backdrop-blur-sm transition hover:bg-forest hover:text-white">
+        INVITATION
+      </a>
+    </nav>
+
+    <div class="relative z-10 mx-auto flex min-h-[calc(100vh-90px)] max-w-5xl flex-col items-center justify-center px-5 pb-14 text-center">
+      <p class="mb-5 text-[10px] font-semibold uppercase tracking-[.4em] text-forest/60 sm:text-xs">
+        With the grace of Lord Ganapatiji &amp; divine blessing of<br>Late Smt Barmati Devi &amp; Late Shri Lalan Singh
+      </p>
+
+      <div class="ornament mb-6 text-blush">
+        <svg class="h-4 w-4 text-rosepetal inline-block fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C10.5 5 7 8 7 12s2.5 7 5 9c2.5-2 5-5 5-9s-3.5-7-5-9z"/>
+        </svg>
+      </div>
+
+      <h1 class="font-serif text-[4.5rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
+        Deepa <span class="mx-1 font-sans font-light text-blush sm:mx-3">&amp;</span> Sumit
+      </h1>
+
+      <p class="mt-9 font-serif text-2xl italic text-charcoal/70 sm:text-3xl">
+        are getting married
+      </p>
+
+      <div class="mt-7 flex flex-col items-center gap-2 text-sm uppercase tracking-[.24em] text-forest/75 sm:flex-row sm:gap-5">
+        <span>Tuesday · 24 November 2026</span>
+        <span class="hidden text-blush sm:inline">•</span>
+        <span>Vadodara, Gujarat</span>
+      </div>
+
+      <!-- Live countdown -->
+      <div id="countdown" class="mt-12 grid w-full max-w-xl grid-cols-4 gap-2 sm:gap-4" aria-label="Countdown to the wedding">
+        <div class="rounded-2xl border border-white/80 bg-white/60 px-2 py-4 shadow-soft backdrop-blur-md sm:px-4">
+          <div id="days" class="font-serif text-3xl text-forest sm:text-4xl">--</div>
+          <div class="mt-1 text-[9px] uppercase tracking-[.2em] text-charcoal/50 sm:text-[10px]">Days</div>
+        </div>
+        <div class="rounded-2xl border border-white/80 bg-white/60 px-2 py-4 shadow-soft backdrop-blur-md sm:px-4">
+          <div id="hours" class="font-serif text-3xl text-forest sm:text-4xl">--</div>
+          <div class="mt-1 text-[9px] uppercase tracking-[.2em] text-charcoal/50 sm:text-[10px]">Hours</div>
+        </div>
+        <div class="rounded-2xl border border-white/80 bg-white/60 px-2 py-4 shadow-soft backdrop-blur-md sm:px-4">
+          <div id="minutes" class="font-serif text-3xl text-forest sm:text-4xl">--</div>
+          <div class="mt-1 text-[9px] uppercase tracking-[.2em] text-charcoal/50 sm:text-[10px]">Minutes</div>
+        </div>
+        <div class="rounded-2xl border border-white/80 bg-white/60 px-2 py-4 shadow-soft backdrop-blur-md sm:px-4">
+          <div id="seconds" class="font-serif text-3xl text-forest sm:text-4xl">--</div>
+          <div class="mt-1 text-[9px] uppercase tracking-[.2em] text-charcoal/50 sm:text-[10px]">Seconds</div>
+        </div>
+      </div>
+
+      <a href="#welcome" class="mt-12 inline-flex items-center gap-2 text-xs uppercase tracking-[.24em] text-forest/65 transition hover:text-forest">
+        Explore the celebration <i data-lucide="arrow-down" class="h-4 w-4"></i>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========================= WELCOME ========================= -->
+    <section id="welcome" class="relative border-t border-forest/10 bg-ivory px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+      
+      <!-- Subtle Midground Falling Petal Accent -->
+      <div class="pointer-events-none absolute right-6 top-16 opacity-40">
+        <svg width="60" height="60" viewBox="0 0 100 100" fill="#D8B9AE">
+          <path d="M30,10 C60,5 85,30 80,60 C75,85 45,95 25,75 C5,55 10,20 30,10 Z"/>
+        </svg>
+      </div>
+
+      <div class="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-20">
+
+        <div class="reveal">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-sage">A note from the families</p>
+          <h2 class="mt-4 font-serif text-5xl leading-none text-forest sm:text-6xl">
+            Golden moments,
+            <span class="block italic text-blush">beautiful memories.</span>
+          </h2>
+
+          <div class="mt-7 h-px w-16 bg-blush"></div>
+
+          <p class="mt-7 max-w-xl text-[15px] leading-8 text-charcoal/70">
+            The Singh family cordially invites you and your family on the auspicious occasion of the union of Deepa and Sumit.
+          </p>
+
+          <p class="mt-5 max-w-xl text-[15px] leading-8 text-charcoal/70">
+            Please be a part of our celebrations, blessings and joyful moments
+            as we come together to make this wedding truly memorable.
+          </p>
+
+          <div class="mt-8 rounded-2xl border border-forest/10 bg-white/70 backdrop-blur-sm p-6 shadow-sm">
+            <p class="text-[10px] font-semibold uppercase tracking-[.22em] text-sage">With warm regards</p>
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-charcoal/50">Parents of the Bride</p>
+                <p class="mt-1 font-serif text-xl text-forest">Mrs. Bharti Singh<br>&amp; Mr. Gyan Sagar Singh</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-charcoal/50">Parents of the Groom</p>
+                <p class="mt-1 font-serif text-xl text-forest">Mrs. Kusum Devi<br>&amp; Mr. Inderjit Singh</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal relative">
+          <!-- Fresh Petal Scattering Frame Surround -->
+          <div class="relative mx-auto max-w-md">
+            <div class="absolute -inset-3 rounded-[2rem] border border-blush/40"></div>
+            
+            <!-- Soft Botanical Corner Sprig -->
+            <div class="pointer-events-none absolute -top-8 -right-6 z-20 h-28 w-28">
+              <svg viewBox="0 0 100 100" fill="none">
+                <path d="M10 90 C30 60 60 30 90 10" stroke="#89947D" stroke-width="2" stroke-linecap="round"/>
+                <path d="M60 40 C75 25 85 45 68 50Z" fill="#D8B9AE" opacity="0.8"/>
+                <path d="M40 60 C55 45 65 65 48 70Z" fill="#E8C7BC" opacity="0.8"/>
+              </svg>
+            </div>
+
+            <div class="flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-soft bg-champagne/20">
+              <img src="Pink and White Elegant Wedding Photoshoot Instagram Post (1).jpg" alt="Deepa and Sumit" class="h-full w-full object-cover transition duration-700 hover:scale-105">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================= EVENTS ========================= -->
+    <section id="events" class="relative bg-white px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+      
+      <!-- Ground Petal Scatter Overlay Details -->
+      <div class="pointer-events-none absolute bottom-10 left-10 opacity-35">
+        <svg width="45" height="45" viewBox="0 0 100 100" fill="#E4A89B">
+          <path d="M20,30 C45,10 75,25 70,55 C65,75 35,80 20,65 Z"/>
+        </svg>
+      </div>
+
+      <div class="mx-auto max-w-5xl">
+        <div class="reveal text-center">
+          <p class="text-xs font-semibold uppercase tracking-[.3em] text-sage">The wedding celebrations</p>
+          <h2 class="mt-4 font-serif text-5xl text-forest sm:text-6xl">Save these moments</h2>
+          <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-charcoal/60">
+            A few special days leading up to the big celebration.
+          </p>
+        </div>
+
+        <div class="relative mt-14">
+          <div class="absolute left-5 top-0 hidden h-full w-px bg-blush/60 sm:left-1/2 sm:block"></div>
+
+          <!-- 21 November -->
+          <article class="reveal relative mb-8 sm:mb-10 sm:grid sm:grid-cols-2 sm:gap-12">
+            <div class="sm:text-right">
+              <span class="inline-block rounded-full bg-sage/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-sage">01</span>
+              <p class="mt-3 font-serif text-2xl text-forest">Saturday · 21 November 2026</p>
+            </div>
+            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:shadow-md">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-serif text-3xl text-forest">Shubh Tilak</h3>
+                  <p class="mt-2 text-xs uppercase tracking-[.18em] text-sage">Golden Moments</p>
+                </div>
+                <i data-lucide="sparkles" class="mt-1 h-5 w-5 shrink-0 text-blush"></i>
+              </div>
+            </div>
+          </article>
+
+          <!-- 22 November -->
+          <article class="reveal relative mb-8 sm:mb-10 sm:grid sm:grid-cols-2 sm:gap-12">
+            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:shadow-md">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-serif text-3xl text-forest">Mehendi &amp; Ladies Sangeet</h3>
+                  <p class="mt-2 text-xs uppercase tracking-[.18em] text-sage">6:00 PM</p>
+                </div>
+                <i data-lucide="music-2" class="mt-1 h-5 w-5 shrink-0 text-blush"></i>
+              </div>
+            </div>
+            <div class="order-1 sm:order-2">
+              <span class="inline-block rounded-full bg-blush/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-blush">02</span>
+              <p class="mt-3 font-serif text-2xl text-forest">Sunday · 22 November 2026</p>
+            </div>
+          </article>
+
+          <!-- 23 November -->
+          <article class="reveal relative mb-8 sm:mb-10 sm:grid sm:grid-cols-2 sm:gap-12">
+            <div class="sm:text-right">
+              <span class="inline-block rounded-full bg-sage/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-sage">03</span>
+              <p class="mt-3 font-serif text-2xl text-forest">Monday · 23 November 2026</p>
+            </div>
+            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:shadow-md">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-serif text-3xl text-forest">Shubh Haldi</h3>
+                  <p class="mt-2 text-xs uppercase tracking-[.18em] text-sage">9:00 AM</p>
+                </div>
+                <i data-lucide="sun" class="mt-1 h-5 w-5 shrink-0 text-sage"></i>
+              </div>
+            </div>
+          </article>
+
+          <!-- 24 November -->
+          <article class="reveal relative sm:grid sm:grid-cols-2 sm:gap-12">
+            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:shadow-md">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-serif text-3xl text-forest">Wedding Ceremony</h3>
+                  <p class="mt-2 text-xs uppercase tracking-[.18em] text-blush">The Big Day</p>
+                </div>
+                <i data-lucide="heart" class="mt-1 h-5 w-5 shrink-0 text-blush"></i>
+              </div>
+              <p class="mt-5 text-sm leading-6 text-charcoal/60">Dwarkesh Farm<br>Tarsali Road, Opposite Tarsali Talav, Vijay Nagar, Vadodara 390009</p>
+              
+              <div class="mt-4 grid grid-cols-1 gap-2 text-xs uppercase tracking-[.16em] text-charcoal/50">
+                <p><span class="font-semibold text-charcoal/80">Barat &amp; Varmala</span> · 07:00 PM</p>
+                <p><span class="font-semibold text-charcoal/80">Dinner</span> · 08:00 PM</p>
+                <p><span class="font-semibold text-charcoal/80">Shubh Vivah</span> · Under the bliss of stars</p>
+              </div>
+            </div>
+            <div class="order-1 sm:order-2">
+              <span class="inline-block rounded-full bg-blush/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-blush">04</span>
+              <p class="mt-3 font-serif text-2xl text-forest">Tuesday · 24 November 2026</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= VENUE & TRAVEL ========================= -->
+    <section id="venue" class="bg-forest px-5 py-24 text-white sm:px-8 sm:py-32">
+      <div class="mx-auto max-w-6xl">
+        <div class="grid gap-12 lg:grid-cols-[1fr_.9fr] lg:items-center lg:gap-20">
+
+          <div class="reveal">
+            <p class="text-xs font-semibold uppercase tracking-[.3em] text-champagne">Venue &amp; travel</p>
+            <h2 class="mt-4 font-serif text-5xl leading-none sm:text-6xl">See you in Vadodara.</h2>
+
+            <p class="mt-7 max-w-xl text-sm leading-7 text-white/65">
+              Our main celebrations will take place at Dwarkesh Farm in Vadodara, Gujarat.
+            </p>
+
+            <div class="mt-9 grid gap-5 sm:grid-cols-2">
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <i data-lucide="map-pin" class="h-5 w-5 text-champagne"></i>
+                <h3 class="mt-4 font-serif text-xl">Venue</h3>
+                <p class="mt-2 text-sm leading-6 text-white/60">Dwarkesh Farm<br>Tarsali Road, Opposite Tarsali Talav, Vijay Nagar, Vadodara 390009</p>
+              </div>
+
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <i data-lucide="car" class="h-5 w-5 text-champagne"></i>
+                <h3 class="mt-4 font-serif text-xl">Travel &amp; parking</h3>
+                <p class="mt-2 text-sm leading-6 text-white/60">Ample parking is available at the venue.</p>
+              </div>
+            </div>
+
+            <a
+              href="https://maps.app.goo.gl/SpUqnCg785rKnpSv5"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[.18em] text-forest transition hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              <i data-lucide="navigation" class="h-4 w-4"></i>
+              Open in Google Maps
+            </a>
+          </div>
+
+          <div class="reveal">
+            <div class="rounded-[2rem] border border-white/10 bg-white/5 p-3">
+              <div class="flex aspect-[4/3] w-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
+                <iframe 
+                  src="https://maps.google.com/maps?q=Dwarkesh%20Farm,%20Tarsali%20Road,%20Vadodara&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  width="100%" 
+                  height="100%" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= FAMILY / CONTACT ========================= -->
+    <section class="bg-ivory px-5 py-20 sm:px-8">
+      <div class="reveal mx-auto max-w-3xl text-center">
+        <p class="text-xs font-semibold uppercase tracking-[.3em] text-sage">Invitation from the family</p>
+        <h2 class="mt-4 font-serif text-4xl text-forest sm:text-5xl">We look forward to celebrating with you.</h2>
+
+        <div class="mx-auto mt-8 max-w-lg rounded-3xl border border-forest/10 bg-white/70 backdrop-blur-sm p-7 shadow-soft">
+          <p class="font-serif text-2xl text-forest">Mrs. Bharti Singh &amp; Mr. Gyan Sagar Singh</p>
+          <p class="mt-4 text-sm leading-7 text-charcoal/60">
+            D-29, Suryadarshan Society<br>
+            Makarpura, Vadodara<br>
+            Gujarat – 390014
+          </p>
+          <a href="tel:+919662722378" class="mt-5 inline-flex items-center gap-2 text-sm text-forest transition hover:text-sage">
+            <i data-lucide="phone" class="h-4 w-4"></i>
+            +91 96627 22378
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================= FOOTER ========================= -->
+  <footer class="border-t border-forest/10 bg-white px-5 py-20 text-center sm:px-8">
+    <div class="mx-auto max-w-3xl">
+      <div class="ornament mb-7 text-blush">
+        <svg class="h-4 w-4 text-rosepetal inline-block fill-current" viewBox="0 0 24 24">
+          <path d="M12 2C10.5 5 7 8 7 12s2.5 7 5 9c2.5-2 5-5 5-9s-3.5-7-5-9z"/>
+        </svg>
+      </div>
+      <p class="text-xs font-semibold uppercase tracking-[.35em] text-sage">Save the date</p>
+      <h2 class="mt-4 font-serif text-5xl text-forest sm:text-6xl">Deepa &amp; Sumit</h2>
+      <p class="mt-5 font-serif text-2xl italic text-charcoal/65">#DeepaWedsSumit</p>
+      <p class="mt-9 font-serif text-xl text-forest">Can’t wait to celebrate with you.</p>
+      <p class="mt-2 text-xs uppercase tracking-[.2em] text-charcoal/40">With love, Deepa &amp; Sumit</p>
+      <div class="mt-12 border-t border-forest/10 pt-6 text-[10px] uppercase tracking-[.18em] text-charcoal/35">
+        24 November 2026 · Vadodara, Gujarat
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================
+    // PETAL SHOWER CANVAS SIMULATION
+    // Realistic multi-layered falling petals with natural lighting
+    // =========================================================
+    const canvas = document.getElementById('petal-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const petalColors = [
+      'rgba(232, 199, 188, 0.85)', // Pale rose blush
+      'rgba(228, 168, 155, 0.80)', // Warm rose petal
+      'rgba(244, 234, 230, 0.90)', // Soft ivory bloom
+      'rgba(216, 185, 174, 0.75)'  // Dusky champagne pink
+    ];
+
+    class Petal {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * height; // Distribute across screen initially
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = -20 - Math.random() * 50;
+        this.size = 8 + Math.random() * 12; // Layered sizes
+        this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+        this.speedY = 0.8 + Math.random() * 1.6;
+        this.speedX = -0.4 + Math.random() * 0.8;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.025;
+        this.oscillationSpeed = 0.015 + Math.random() * 0.02;
+        this.oscillationDistance = 25 + Math.random() * 30;
+        this.angle = Math.random() * Math.PI * 2;
+        
+        // Depth-of-field simulation: small petals are in background, large are in foreground
+        this.depth = Math.random();
+        this.blur = this.depth > 0.85 ? 1.5 : (this.depth < 0.25 ? 0.8 : 0);
+      }
+
+      update() {
+        this.angle += this.oscillationSpeed;
+        this.x += this.speedX + Math.sin(this.angle) * 0.6;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > height + 30 || this.x < -30 || this.x > width + 30) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        // Photorealistic petal curved shape
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(this.size * 0.6, -this.size * 0.7, this.size * 0.9, this.size * 0.3, 0, this.size * 1.3);
+        ctx.bezierCurveTo(-this.size * 0.9, this.size * 0.3, -this.size * 0.6, -this.size * 0.7, 0, 0);
+        
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = 'rgba(216, 185, 174, 0.4)';
+        ctx.shadowBlur = this.blur * 4;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const petalCount = 38;
+    const petals = Array.from({ length: petalCount }, () => new Petal());
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      petals.forEach((petal) => {
+        petal.update();
+        petal.draw();
+      });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    // =========================================================
+    // LIVE COUNTDOWN
+    // =========================================================
+    const weddingDate = new Date("2026-11-24T19:00:00+05:30").getTime();
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const countdownEl = document.getElementById("countdown");
+
+    function pad(number) {
+      return String(number).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const distance = weddingDate - Date.now();
+
+      if (distance <= 0) {
+        countdownEl.innerHTML = `
+          <div class="col-span-4 rounded-2xl border border-white/80 bg-white/50 px-6 py-5 shadow-soft">
+            <p class="font-serif text-2xl text-forest">The day has arrived. ♡</p>
+          </div>`;
+        clearInterval(countdownTimer);
+        return;
+      }
+
+      daysEl.textContent = Math.floor(distance / 86400000);
+      hoursEl.textContent = pad(Math.floor((distance / 3600000) % 24));
+      minutesEl.textContent = pad(Math.floor((distance / 60000) % 60));
+      secondsEl.textContent = pad(Math.floor((distance / 1000) % 60));
+    }
+
+    updateCountdown();
+    const countdownTimer = setInterval(updateCountdown, 1000);
+
+    // =========================================================
+    // SUBTLE SCROLL REVEAL
+    // =========================================================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+    // Initialize icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
