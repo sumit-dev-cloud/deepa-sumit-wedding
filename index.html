@@ -81,12 +81,12 @@
     /* Falling Petals Shower Animation */
     #petal-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: 40;
+      display: block;
     }
     header,
     main,
@@ -119,11 +119,11 @@
 
   .mandap-backdrop {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
-  overflow: hidden;
 
   background-image:
     linear-gradient(
@@ -140,8 +140,6 @@
     center top,
     center bottom;
 
-  /* Keep the artwork tied to the viewport rather than letting the
-     mobile width change its visual proportions. */
   background-size:
     100% 100%,
     100% auto,
@@ -314,11 +312,86 @@ footer::after {
 }
 
 
+
+    /* =========================================================
+       MOBILE / iPHONE 16 BACKGROUND FIX
+       Keep the decorative artwork at the top and bottom only.
+       The centre area stays clean so the invitation remains readable.
+       ========================================================= */
+    @media (max-width: 640px) {
+      header#home {
+        position: relative;
+        min-height: 100svh;
+        isolation: isolate;
+      }
+
+      header#home .mandap-backdrop {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(250,247,242,.82) 0%,
+          rgba(250,247,242,.96) 30%,
+          rgba(250,247,242,.96) 70%,
+          rgba(250,247,242,.84) 100%
+        );
+        opacity: 1;
+        filter: none;
+        mix-blend-mode: normal;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      /* Top artwork: preserve its natural aspect ratio and clip it to
+         the top portion instead of stretching it over the full phone. */
+      header#home .mandap-backdrop::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 31%;
+        background: url("images/jharokha-top.jpg") center top / 100% auto no-repeat;
+        opacity: .24;
+        filter: blur(.7px) saturate(.78);
+      }
+
+      /* Bottom artwork: preserve its natural aspect ratio and anchor it
+         to the bottom. It cannot rise into the invitation copy. */
+      header#home .mandap-backdrop::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 31%;
+        background: url("images/jharokha-bottom.jpg") center bottom / 100% auto no-repeat;
+        opacity: .22;
+        filter: blur(.7px) saturate(.78);
+      }
+
+      /* Mobile side framing: subtle and fixed to the sides. */
+      main::before,
+      main::after {
+        width: 30px;
+        opacity: .22;
+      }
+
+      header#home > nav,
+      header#home > div:not(.mandap-backdrop) {
+        position: relative;
+        z-index: 10;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior:auto; }
       .scroll-guide { animation: none;}
       *,*::before,*::after { transition-duration:.10ms !important; }
-      #petal-canvas { display: none; }
+      #petal-canvas { display: block; }
     }
 
     @media (max-width: 640px) {
@@ -360,27 +433,10 @@ footer::after {
     bottom: .75rem;
   }
 
-  /* Mobile: keep the side jharokha framing from changing the
-     composition of the main background artwork. */
   main::before,
   main::after {
-    width: 42px;
-    opacity: .38;
-    background-size: auto 100%;
-  }
-
-  .mandap-backdrop {
-    /* Same visual arrangement as desktop; only the overlay strength
-       is reduced slightly so the mobile text remains clear. */
-    background-size:
-      100% 100%,
-      100% auto,
-      100% 60%;
-    background-position:
-      center,
-      center top,
-      center bottom;
-    opacity: .24;
+    width: 48px;
+    opacity: .55;
   }
 
   footer {
@@ -393,6 +449,44 @@ footer::after {
     font-size: 2.75rem;
   }
 }
+
+  
+
+    /* Keep falling petals visible and smooth on phones. */
+    @media (max-width: 640px) {
+      #petal-canvas {
+        z-index: 40;
+        display: block;
+      }
+    }
+
+    /* Final mobile override: prevents the original desktop background
+       declarations from re-expanding the artwork on narrow screens. */
+    @media (max-width: 640px) {
+      header#home .mandap-backdrop {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(250,247,242,.82) 0%,
+          rgba(250,247,242,.96) 30%,
+          rgba(250,247,242,.96) 70%,
+          rgba(250,247,242,.84) 100%
+        );
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 1;
+        filter: none;
+        mix-blend-mode: normal;
+      }
+      header#home .mandap-backdrop::before {
+        background: url("images/jharokha-top.jpg") center top / 100% auto no-repeat;
+        opacity: .24;
+      }
+      header#home .mandap-backdrop::after {
+        background: url("images/jharokha-bottom.jpg") center bottom / 100% auto no-repeat;
+        opacity: .22;
+      }
+    }
 
   </style>
 </head>
@@ -853,14 +947,27 @@ footer::after {
     const petalCount = 38;
     const petals = Array.from({ length: petalCount }, () => new Petal());
 
+    let petalAnimationFrame;
+
     function animatePetals() {
       ctx.clearRect(0, 0, width, height);
       petals.forEach((petal) => {
         petal.update();
         petal.draw();
       });
-      requestAnimationFrame(animatePetals);
+      petalAnimationFrame = requestAnimationFrame(animatePetals);
     }
+
+    function restartPetals() {
+      if (!petalAnimationFrame) {
+        petalAnimationFrame = requestAnimationFrame(animatePetals);
+      }
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) restartPetals();
+    });
+
     animatePetals();
 
     // =========================================================
