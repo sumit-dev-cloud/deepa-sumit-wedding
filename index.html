@@ -119,11 +119,11 @@
 
   .mandap-backdrop {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
+  overflow: hidden;
 
   background-image:
     linear-gradient(
@@ -140,6 +140,8 @@
     center top,
     center bottom;
 
+  /* Keep the artwork tied to the viewport rather than letting the
+     mobile width change its visual proportions. */
   background-size:
     100% 100%,
     100% auto,
@@ -358,10 +360,27 @@ footer::after {
     bottom: .75rem;
   }
 
+  /* Mobile: keep the side jharokha framing from changing the
+     composition of the main background artwork. */
   main::before,
   main::after {
-    width: 48px;
-    opacity: .55;
+    width: 42px;
+    opacity: .38;
+    background-size: auto 100%;
+  }
+
+  .mandap-backdrop {
+    /* Same visual arrangement as desktop; only the overlay strength
+       is reduced slightly so the mobile text remains clear. */
+    background-size:
+      100% 100%,
+      100% auto,
+      100% 60%;
+    background-position:
+      center,
+      center top,
+      center bottom;
+    opacity: .24;
   }
 
   footer {
