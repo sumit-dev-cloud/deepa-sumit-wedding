@@ -117,50 +117,142 @@
       filter: blur(0px);
     }
 
-     .mandap-backdrop {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(to bottom,rgba(250,247,242,.62) 0%, rgba(244,220,202,.36) 48%, rgba(250,247,242,.22) 100%),
-        url("mandap.jpg");
-      background-position: center center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      opacity: .28;
-      filter: blur(1px) saturate(.8);
-      transform: scale(1.02);
-      mix-blend-mode: multiply;
-      pointer-events: none;
-    }
+  .mandap-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(250,247,242,.62),
+      rgba(244,220,202,.36) 48%,
+      rgba(250,247,242,.22)
+    ),
+    url("images/jharokha-top.jpg"),
+    url("images/jharokha-bottom.jpg");
+
+  background-position:
+    center,
+    center top,
+    center bottom;
+
+  background-size:
+    100% 100%,
+    100% auto,
+    100% 60%;
+
+  background-repeat: no-repeat;
+
+  opacity: .28;
+  filter: blur(1px) saturate(.8);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+  overflow: hidden;
+}
+
+main::before,
+main::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(55px, 9vw, 150px);
+  z-index: 2;
+  opacity: .5;
+  pointer-events: none;
+  background: url("images/jharokha-bottom.jpg") no-repeat;
+  background-size: auto 100%;
+}
+
+main::before {
+  left: 0;
+  background-position: left center;
+}
+
+main::after {
+  right: 0;
+  background-position: right center;
+}
+
+main > * {
+  position: relative;
+  z-index: 3;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  color: #26372F;
+  background:
+    linear-gradient(
+      to top,
+      rgba(250, 247, 242, .93),
+      rgba(250, 247, 242, .94)
+    ),
+    url("images/footer-peacock.jpg") center bottom / 100% auto no-repeat;
+}
+
+footer > div {
+  position: relative;
+  z-index: 5;
+  color: #26372F;
+}
+
+footer::before,
+footer::after {
+  content: none;
+  display: none;
+}
+
+main > *,
+footer > * {
+  position: relative;
+  z-index: 3;
+}
+
+
+
+footer {
+  background:
+    linear-gradient(
+      to top,
+      rgba(250, 247, 242, .93),
+      rgba(250, 247, 242, .94)
+    ),
+    url("images/footer-peacock.jpg") center bottom / 100% auto no-repeat;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  color: #26372F;
+}
+
+footer > div {
+  position: relative;
+  z-index: 5;
+  color: #26372F;
+}
+
+footer::before,
+footer::after {
+  display: none;
+  opacity: .5;
+}
 
     .scroll-guide {
   animation: gentle-bounce 2s ease-in-out infinite;
 }
 
-.floral-corner {
-  position: absolute;
-  z-index: 0;
-  width: 130px;
-  height: 130px;
-  opacity: .55;
-  pointer-events: none;
-}
-
-.floral-corner--left {
-  top: 32px;
-  left: 20px;
-}
-
-.floral-corner--right {
-  right: 20px;
-  bottom: 32px;
-  transform: scaleX(-1);
-}
-
-.floral-corner svg {
-  width: 100%;
-  height: 100%;
-}
 
 @keyframes gentle-bounce {
   0%, 100% {
@@ -191,18 +283,104 @@
   cursor: pointer;
 }
 
+.back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(38, 55, 47, .15);
+  border-radius: 999px;
+  background: rgba(250, 247, 242, .88);
+  color: #26372F;
+  box-shadow: 0 8px 24px rgba(38, 55, 47, .12);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior:auto; }
       .scroll-guide { animation: none;}
       *,*::before,*::after { transition-duration:.10ms !important; }
       #petal-canvas { display: none; }
     }
+
+    @media (max-width: 640px) {
+  header {
+    min-height: 100svh;
+  }
+
+  header nav {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  header h1 {
+    font-size: 3.2rem;
+    line-height: .9;
+  }
+
+  header .ornament::before,
+  header .ornament::after {
+    width: 34px;
+  }
+
+  #countdown {
+    gap: .35rem;
+    margin-top: 2rem;
+  }
+
+  #countdown > div {
+    padding: .75rem .25rem;
+    border-radius: .85rem;
+  }
+
+  #countdown div[id] {
+    font-size: 1.75rem;
+  }
+
+  .music-toggle {
+    right: .75rem;
+    bottom: .75rem;
+  }
+
+  main::before,
+  main::after {
+    width: 48px;
+    opacity: .55;
+  }
+
+  footer {
+    min-height: 360px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  footer h2 {
+    font-size: 2.75rem;
+  }
+}
+
   </style>
 </head>
 
 <body class="font-sans antialiased relative">
 
-   <audio id="wedding-music" src="images/wedding.mp3" loop preload="none"></audio>
+   <audio id="wedding-music" src="images/wed-invi.mp3" loop preload="none"></audio>
 
 <button
   id="music-toggle"
@@ -215,47 +393,25 @@
   <i data-lucide="volume-x"></i>
 </button>
 
+<button
+  id="back-to-top"
+  class="back-to-top"
+  type="button"
+  aria-label="Back to top"
+  title="Back to top"
+>
+  <i data-lucide="arrow-up"></i>
+</button>
+
 
   <!-- ========================= PETAL SHOWER CANVAS ========================= -->
   <canvas id="petal-canvas" aria-hidden="true"></canvas>
-
+<!-- Save the supplied mandap image beside this HTML as mandap.jpg -->
+   
   <!-- ========================= HERO ========================= -->
   <header id="home" class="relative min-h-screen overflow-hidden hero-bg grain">
 
-    <!-- Save the supplied mandap image beside this HTML as mandap.jpg -->
-    <div class="mandap-backdrop" aria-hidden="true"></div>
-    
-    <!-- Midground Soft Floral Vignette (Top Right) -->
-    <div class="pointer-events-none absolute -top-12 -right-12 z-0 h-80 w-80 opacity-70 transition-transform duration-1000 md:h-[450px] md:w-[450px]">
-      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-full w-full drop-shadow-xl">
-        <g opacity="0.85">
-          <!-- Soft Foliage Leaves -->
-          <path d="M220 180 C270 120 340 140 370 200 C340 220 270 220 220 180Z" fill="#89947D" opacity="0.65"/>
-          <path d="M260 210 C310 180 380 230 380 290 C330 280 280 260 260 210Z" fill="#6B7761" opacity="0.55"/>
-          <!-- Blooming Peony/Rose Petals -->
-          <circle cx="310" cy="170" r="48" fill="#F4EAE6" opacity="0.9"/>
-          <path d="M270 160 C260 110 330 100 350 145 C320 160 290 180 270 160Z" fill="#E8C7BC" opacity="0.8"/>
-          <path d="M300 130 C340 100 390 140 365 185 C335 170 320 150 300 130Z" fill="#D8B9AE" opacity="0.75"/>
-          <path d="M280 190 C260 230 320 250 350 210 C330 190 300 185 280 190Z" fill="#E4A89B" opacity="0.7"/>
-          <circle cx="315" cy="165" r="22" fill="#FAF7F2" opacity="0.95"/>
-        </g>
-      </svg>
-    </div>
-
-    <!-- Foreground Out-of-Focus Rose & Petals (Bottom Left Depth of Field) -->
-    <div class="dof-foreground pointer-events-none absolute -bottom-16 -left-14 z-20 h-72 w-72 opacity-80 md:h-96 md:w-96">
-      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Blurred large foreground rose blooms -->
-        <circle cx="90" cy="220" r="75" fill="#E8C7BC" opacity="0.6"/>
-        <circle cx="115" cy="195" r="55" fill="#D8B9AE" opacity="0.7"/>
-        <circle cx="130" cy="180" r="35" fill="#FAF7F2" opacity="0.8"/>
-        <!-- Scattered foreground petals -->
-        <path d="M160 140 C180 120 210 130 205 155 C190 170 165 160 160 140Z" fill="#E4A89B" opacity="0.75"/>
-        <path d="M70 120 C90 105 115 120 105 138 C90 145 75 135 70 120Z" fill="#E8C7BC" opacity="0.65"/>
-      </svg>
-    </div>
-    
-
+     <div class="mandap-backdrop" aria-hidden="true"></div>
 
     <nav class="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
       <a href="#home" class="font-serif text-xl tracking-[.18em] text-forest">D &amp; S</a>
@@ -275,7 +431,7 @@
         </svg>
       </div>
 
-      <h1 class="font-serif text-[3.8rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
+      <h1 class="font-serif text-[3.2rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
         Deepa <span class="mx-1 font-sans font-light text-blush sm:mx-3">&amp;</span> Sumit
       </h1>
 
@@ -390,45 +546,6 @@
       
       <!-- Ground Petal Scatter Overlay Details -->
 
-      <section id="events" class="relative bg-white px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
-
-  <div class="floral-corner floral-corner--left" aria-hidden="true">
-    <svg viewBox="0 0 140 140" fill="none">
-      <path
-        d="M12 126C38 92 66 55 126 14"
-        stroke="#89947D"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-
-      <circle cx="42" cy="88" r="10" fill="#D8B9AE"/>
-      <circle cx="32" cy="82" r="8" fill="#E4A89B"/>
-      <circle cx="49" cy="77" r="8" fill="#E8C7BC"/>
-      <circle cx="43" cy="83" r="4" fill="#FAF7F2"/>
-
-      <circle cx="83" cy="48" r="8" fill="#D8B9AE"/>
-      <circle cx="75" cy="42" r="6" fill="#E4A89B"/>
-      <circle cx="91" cy="40" r="6" fill="#E8C7BC"/>
-      <circle cx="83" cy="45" r="3" fill="#FAF7F2"/>
-    </svg>
-  </div>
-
-  <div class="floral-corner floral-corner--right" aria-hidden="true">
-    <svg viewBox="0 0 140 140" fill="none">
-      <path
-        d="M12 126C38 92 66 55 126 14"
-        stroke="#89947D"
-        stroke-width="2"
-        stroke-linecap="round"
-      />
-
-      <circle cx="42" cy="88" r="10" fill="#D8B9AE"/>
-      <circle cx="32" cy="82" r="8" fill="#E4A89B"/>
-      <circle cx="49" cy="77" r="8" fill="#E8C7BC"/>
-      <circle cx="43" cy="83" r="4" fill="#FAF7F2"/>
-    </svg>
-  </div>
-
       <div class="pointer-events-none absolute bottom-10 left-10 opacity-35">
         <svg width="45" height="45" viewBox="0 0 100 100" fill="#E4A89B">
           <path d="M20,30 C45,10 75,25 70,55 C65,75 35,80 20,65 Z"/>
@@ -453,7 +570,7 @@
               <span class="inline-block rounded-full bg-sage/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-sage">01</span>
               <p class="mt-3 font-serif text-2xl text-forest">Saturday · 21 November 2026</p>
             </div>
-            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:shadow-md">
+            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:-translate-y-1 hover:border-blush/50 hover:shadow-md">
               <div class="flex items-start justify-between gap-4">
                 <div>
                   <h3 class="font-serif text-3xl text-forest">Shubh Tilak</h3>
@@ -466,7 +583,7 @@
 
           <!-- 22 November -->
           <article class="reveal relative mb-8 sm:mb-10 sm:grid sm:grid-cols-2 sm:gap-12">
-            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:shadow-md">
+            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:-translate-y-1 hover:border-blush/50 hover:shadow-md">
               <div class="flex items-start justify-between gap-4">
                 <div>
                   <h3 class="font-serif text-3xl text-forest">Mehendi &amp; Ladies Sangeet</h3>
@@ -487,7 +604,7 @@
               <span class="inline-block rounded-full bg-sage/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[.2em] text-sage">03</span>
               <p class="mt-3 font-serif text-2xl text-forest">Monday · 23 November 2026</p>
             </div>
-            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:shadow-md">
+            <div class="mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:mt-0 transition duration-300 hover:-translate-y-1 hover:border-blush/50 hover:shadow-md">
               <div class="flex items-start justify-between gap-4">
                 <div>
                   <h3 class="font-serif text-3xl text-forest">Shubh Haldi</h3>
@@ -500,7 +617,7 @@
 
           <!-- 24 November -->
           <article class="reveal relative sm:grid sm:grid-cols-2 sm:gap-12">
-            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:shadow-md">
+            <div class="order-2 mt-5 rounded-3xl border border-forest/10 bg-ivory p-7 shadow-soft sm:order-1 sm:mt-0 transition duration-300 hover:-translate-y-1 hover:border-blush/50 hover:shadow-md">
               <div class="flex items-start justify-between gap-4">
                 <div>
                   <h3 class="font-serif text-3xl text-forest">Wedding Ceremony</h3>
@@ -593,7 +710,6 @@
         <div class="mx-auto mt-8 max-w-lg rounded-3xl border border-forest/10 bg-white/70 backdrop-blur-sm p-7 shadow-soft">
           <p class="font-serif text-2xl text-forest">Mrs. Bharti Singh &amp; Mr. Gyan Sagar Singh</p>
           <p class="mt-4 text-sm leading-7 text-charcoal/60">
-            D-29, Suryadarshan Society<br>
             Makarpura, Vadodara<br>
             Gujarat – 390014
           </p>
@@ -780,25 +896,56 @@
 
     // Initialize icons
     lucide.createIcons();
-    const music = document.getElementById("wedding-music");
+ const music = document.getElementById("wedding-music");
 const musicToggle = document.getElementById("music-toggle");
 
+function updateMusicControl(isPlaying, message = "") {
+  musicToggle.innerHTML = `<i data-lucide="${isPlaying ? "volume-2" : "volume-x"}"></i>`;
+  musicToggle.setAttribute(
+    "aria-label",
+    isPlaying ? "Mute wedding music" : "Play wedding music"
+  );
+  musicToggle.setAttribute(
+    "title",
+    message || (isPlaying ? "Mute wedding music" : "Play wedding music")
+  );
+  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+
+  lucide.createIcons();
+}
+
+music.addEventListener("error", () => {
+  updateMusicControl(false, "Music file could not be loaded");
+  musicToggle.disabled = true;
+});
+
 musicToggle.addEventListener("click", async () => {
-  if (music.paused) {
-    await music.play();
-    musicToggle.innerHTML = '<i data-lucide="volume-2"></i>';
-    musicToggle.setAttribute("aria-label", "Mute wedding music");
-    musicToggle.setAttribute("title", "Mute wedding music");
-    musicToggle.setAttribute("aria-pressed", "true");
-  } else {
-    music.pause();
-    musicToggle.innerHTML = '<i data-lucide="volume-x"></i>';
-    musicToggle.setAttribute("aria-label", "Play wedding music");
-    musicToggle.setAttribute("title", "Play wedding music");
-    musicToggle.setAttribute("aria-pressed", "false");
+  try {
+    if (music.paused) {
+      await music.play();
+      updateMusicControl(true);
+    } else {
+      music.pause();
+      updateMusicControl(false);
+    }
+  } catch {
+    updateMusicControl(false, "Music file could not be loaded");
+    musicToggle.disabled = true;
   }
-   lucide.createIcons();
-    });
+});
+
+const backToTop = document.getElementById("back-to-top");
+
+window.addEventListener("scroll", () => {
+  backToTop.classList.toggle("visible", window.scrollY > 500);
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
   </script>
 </body>
 </html>
