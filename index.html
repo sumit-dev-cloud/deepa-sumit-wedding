@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#FAF7F2">
   <meta name="description" content="Wedding invitation for Deepa & Sumit — 24 November 2026, Vadodara, Gujarat.">
-  <title>Deepa & Sumit | Wedding Invitation</title>
+  <title>Sumit & Deepa | Wedding Invitation</title>
+
+  <!-- Preload the first critical image so the preloader can dismiss faster -->
+  <link rel="preload" as="image" href="images/a.jpeg">
 
   <!-- Elegant serif + clean sans-serif typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
- 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -88,6 +90,9 @@
       pointer-events: none;
       z-index: 40;
       display: block;
+      /* GPU Acceleration */
+      will-change: transform;
+      transform: translateZ(0);
     }
     header,
     main,
@@ -316,8 +321,6 @@ footer::after {
 
     /* =========================================================
        MOBILE / iPHONE 16 BACKGROUND FIX
-       Keep the decorative artwork at the top and bottom only.
-       The centre area stays clean so the invitation remains readable.
        ========================================================= */
     @media (max-width: 640px) {
       header#home {
@@ -346,8 +349,6 @@ footer::after {
         pointer-events: none;
       }
 
-      /* Top artwork: preserve its natural aspect ratio and clip it to
-         the top portion instead of stretching it over the full phone. */
       header#home .mandap-backdrop::before {
         content: "";
         position: absolute;
@@ -360,8 +361,6 @@ footer::after {
         filter: blur(.7px) saturate(.78);
       }
 
-      /* Bottom artwork: preserve its natural aspect ratio and anchor it
-         to the bottom. It cannot rise into the invitation copy. */
       header#home .mandap-backdrop::after {
         content: "";
         position: absolute;
@@ -374,7 +373,6 @@ footer::after {
         filter: blur(.7px) saturate(.78);
       }
 
-      /* Mobile side framing: subtle and fixed to the sides. */
       main::before,
       main::after {
         width: 30px;
@@ -399,100 +397,234 @@ footer::after {
   header {
     min-height: 100svh;
   }
-
   header nav {
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
-
   header h1 {
     font-size: 3.2rem;
     line-height: .9;
   }
-
   header .ornament::before,
   header .ornament::after {
     width: 34px;
   }
-
   #countdown {
     gap: .35rem;
     margin-top: 2rem;
   }
-
   #countdown > div {
     padding: .75rem .25rem;
     border-radius: .85rem;
   }
-
   #countdown div[id] {
     font-size: 1.75rem;
   }
-
   .music-toggle {
     right: .75rem;
     bottom: .75rem;
   }
-
   main::before,
   main::after {
     width: 48px;
     opacity: .55;
   }
-
   footer {
     min-height: 360px;
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
   footer h2 {
     font-size: 2.75rem;
   }
+  #petal-canvas {
+    z-index: 40;
+    display: block;
+  }
+  header#home .mandap-backdrop {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(250,247,242,.82) 0%,
+      rgba(250,247,242,.96) 30%,
+      rgba(250,247,242,.96) 70%,
+      rgba(250,247,242,.84) 100%
+    );
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1;
+    filter: none;
+    mix-blend-mode: normal;
+  }
+  header#home .mandap-backdrop::before {
+    background: url("images/jharokha-top.jpg") center top / 100% auto no-repeat;
+    opacity: .24;
+  }
+  header#home .mandap-backdrop::after {
+    background: url("images/jharokha-bottom.jpg") center bottom / 100% auto no-repeat;
+    opacity: .22;
+  }
 }
 
-  
-
-    /* Keep falling petals visible and smooth on phones. */
-    @media (max-width: 640px) {
-      #petal-canvas {
-        z-index: 40;
-        display: block;
-      }
+    /* =========================================================
+       SLIDESHOW STYLES (Starts Paused Until Scrolled Into View)
+       ========================================================= */
+    .slideshow-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .slideshow-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: crossfade-long 40s infinite;
+      
+      /* New: Keeps animation paused by default */
+      animation-play-state: paused;
+      
+      /* GPU Acceleration */
+      will-change: opacity, transform;
+      transform: translateZ(0);
     }
 
-    /* Final mobile override: prevents the original desktop background
-       declarations from re-expanding the artwork on narrow screens. */
-    @media (max-width: 640px) {
-      header#home .mandap-backdrop {
-        background-image: linear-gradient(
-          to bottom,
-          rgba(250,247,242,.82) 0%,
-          rgba(250,247,242,.96) 30%,
-          rgba(250,247,242,.96) 70%,
-          rgba(250,247,242,.84) 100%
-        );
-        background-size: 100% 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 1;
-        filter: none;
-        mix-blend-mode: normal;
-      }
-      header#home .mandap-backdrop::before {
-        background: url("images/jharokha-top.jpg") center top / 100% auto no-repeat;
-        opacity: .24;
-      }
-      header#home .mandap-backdrop::after {
-        background: url("images/jharokha-bottom.jpg") center bottom / 100% auto no-repeat;
-        opacity: .22;
-      }
+    /* New: Resumes animation when `.color-bloom` is added via scroll */
+    .slideshow-frame.color-bloom img {
+      animation-play-state: running;
+    }
+
+    /* Shifting delays by -2s puts Image 1 exactly at its 5% keyframe (Opacity: 1) while paused */
+    .slideshow-frame img:nth-child(1) { animation-delay: -2s; }
+    .slideshow-frame img:nth-child(2) { animation-delay: 8s; }
+    .slideshow-frame img:nth-child(3) { animation-delay: 18s; }
+    .slideshow-frame img:nth-child(4) { animation-delay: 28s; }
+
+    /* Keyframes: 2s fade in, 8s hold, 2s fade out */
+    @keyframes crossfade-long {
+      0%   { opacity: 0; }
+      5%   { opacity: 1; }   /* Fully visible at 2s */
+      25%  { opacity: 1; }   /* Starts fading out at 10s */
+      30%  { opacity: 0; }   /* Fully hidden at 12s */
+      100% { opacity: 0; }
+    }
+
+    /* =========================================================
+       GOLDEN SPARKLE BORDER STYLES
+       ========================================================= */
+    .sparkle-wrapper {
+      position: relative;
+    }
+    
+    .sparkle-wrapper::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 65%,
+        rgba(255, 179, 0, 0.7) 85%,
+        rgba(255, 255, 255, 1) 95%,
+        transparent 100%
+      );
+      animation: rotate-sparkle 5.5s linear infinite;
+      z-index: 0;
+      
+      /* GPU Acceleration */
+      will-change: transform;
+    }
+
+    @keyframes rotate-sparkle {
+      100% { transform: rotate(360deg) translateZ(0); }
+    }
+
+    /* =========================================================
+       INTERNAL GOLD DUST PARALLAX STYLES
+       ========================================================= */
+    .gold-dust-container {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+      mix-blend-mode: screen;
+    }
+
+    .dust-particles {
+      position: absolute;
+      top: -100%; 
+      left: -100%; 
+      width: 300%; 
+      height: 300%;
+      background-image:
+        radial-gradient(circle, rgba(255, 190, 0, 0.8) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255, 220, 100, 0.6) 1.5px, transparent 2px),
+        radial-gradient(circle, rgba(255, 200, 50, 0.9) 1px, transparent 2px);
+      background-size: 90px 90px, 130px 130px, 170px 170px;
+      background-position: 0 0, 40px 60px, 100px 20px;
+      
+      animation: float-dust 45s linear infinite;
+      animation-play-state: paused; /* Wait for scroll reveal */
+      
+      /* GPU Acceleration */
+      will-change: transform;
+    }
+
+    /* Resume dust animation on scroll */
+    .slideshow-frame.color-bloom .dust-particles {
+      animation-play-state: running;
+    }
+
+    @keyframes float-dust {
+      0% { transform: translateY(0) rotate(0deg) translateZ(0); }
+      100% { transform: translateY(-30%) rotate(5deg) translateZ(0); }
+    }
+
+    /* =========================================================
+       PRELOADER STYLES
+       ========================================================= */
+    body.loading-lock { overflow: hidden; }
+    #preloader { transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    #preloader.loaded { opacity: 0; pointer-events: none; }
+    @keyframes line-load { 
+      0% { transform: scaleX(0); transform-origin: left; } 
+      50% { transform: scaleX(1); transform-origin: left; } 
+      50.1% { transform: scaleX(1); transform-origin: right; } 
+      100% { transform: scaleX(0); transform-origin: right; } 
+    }
+    .loading-line { animation: line-load 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+    /* =========================================================
+       CINEMATIC SCROLL REVEAL STYLES
+       ========================================================= */
+    .cinematic-reveal {
+      filter: grayscale(100%) brightness(0.85) contrast(1.15);
+      transition: filter 2s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .cinematic-reveal.color-bloom {
+      filter: grayscale(0%) brightness(1) contrast(1);
     }
 
   </style>
 </head>
 
-<body class="font-sans antialiased relative">
+<body class="font-sans antialiased relative loading-lock">
+
+  <!-- ========================= ELEGANT PRELOADER ========================= -->
+  <div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ivory">
+    <div class="text-center">
+      <span class="font-serif text-5xl tracking-[.18em] text-forest sm:text-6xl animate-pulse">S <span class="text-blush">&amp;</span> D</span>
+      <div class="mt-6 h-[1px] w-24 mx-auto overflow-hidden bg-forest/10">
+        <div class="loading-line h-full w-full bg-forest"></div>
+      </div>
+    </div>
+  </div>
 
    <audio id="wedding-music" src="images/wed-invi.mpeg" loop preload="none"></audio>
 
@@ -528,21 +660,22 @@ footer::after {
      <div class="mandap-backdrop" aria-hidden="true"></div>
 
     <nav class="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
-      <a href="#home" class="font-serif text-xl tracking-[.18em] text-forest">D &amp; S</a>
+      <a href="#home" class="font-serif text-xl tracking-[.18em] text-forest">S &amp; D</a>
       <a href="#events" class="rounded-full border border-forest/15 bg-white/40 px-4 py-2 text-xs tracking-[.16em] text-forest backdrop-blur-sm transition hover:bg-forest hover:text-white">
         INVITATION
       </a>
+              <!-- LOCATION -->
     </nav>
 
     <div class="relative z-10 mx-auto flex min-h-[calc(100vh-90px)] max-w-5xl flex-col items-center justify-center px-5 pb-14 text-center">
       <p class="mb-5 text-[10px] font-semibold uppercase tracking-[.4em] text-forest/60 sm:text-xs">
-        With the grace of Lord Ganapatiji &amp; divine blessing of<br>Late Smt Barmati Devi &amp; Late Shri Lalan Singh
+        With the grace of Lord Ganapatiji &amp; divine blessing of<br>Late Smt Panmati Devi &amp; Late Shri Rajdev Singh
       </p>
 
        <div class="ornament mb-6 text-marigold text-xl drop-shadow-md"><span>ॐ</span></div>
 
       <h1 class="font-serif text-[3.2rem] leading-[.78] tracking-[-.035em] text-forest sm:text-[7rem] md:text-[8.5rem]">
-        Deepa <span class="mx-1 font-sans font-light text-blush sm:mx-3">&amp;</span> Sumit
+        Sumit <span class="mx-1 font-sans font-light text-blush sm:mx-3">&amp;</span> Deepa
       </h1>
 
       <p class="mt-9 font-serif text-2xl italic text-charcoal/70 sm:text-3xl">
@@ -605,7 +738,7 @@ footer::after {
           <div class="mt-7 h-px w-16 bg-blush"></div>
 
           <p class="mt-7 max-w-xl text-[15px] leading-8 text-charcoal/70">
-            The Singh family cordially invites you and your family on the auspicious occasion of the union of Deepa and Sumit.
+            The Singh family cordially invites you and your family on the auspicious occasion of the union of Sumit and Deepa.
           </p>
 
           <p class="mt-5 max-w-xl text-[15px] leading-8 text-charcoal/70">
@@ -617,13 +750,13 @@ footer::after {
             <p class="text-[10px] font-semibold uppercase tracking-[.22em] text-sage">With warm regards</p>
             <div class="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
-                <p class="text-[10px] uppercase tracking-widest text-charcoal/50">Parents of the Bride</p>
-                <p class="mt-1 font-serif text-xl text-forest">Mrs. Bharti Singh<br>&amp; Mr. Gyan Sagar Singh</p>
-              </div>
-              <div>
                 <p class="text-[10px] uppercase tracking-widest text-charcoal/50">Parents of the Groom</p>
                 <p class="mt-1 font-serif text-xl text-forest">Mrs. Kusum Devi<br>&amp; Mr. Inderjit Singh</p>
               </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-charcoal/50">Parents of the Bride</p>
+                <p class="mt-1 font-serif text-xl text-forest">Mrs. Bharti Singh<br>&amp; Mr. Gyan Sagar Singh</p>
+              </div>          
             </div>
           </div>
         </div>
@@ -642,8 +775,19 @@ footer::after {
               </svg>
             </div>
 
-            <div class="flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-soft bg-champagne/20">
-              <img src="images/WLCP.jpeg" alt="Deepa and Sumit" class="h-full w-full object-cover transition duration-700 hover:scale-105">
+           <div class="sparkle-wrapper flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[1.75rem] p-[3px] shadow-soft transition-shadow duration-500 hover:shadow-[0_0_35px_rgba(255,179,0,0.6)] bg-forest/5">
+              <div id="cinematic-frame" class="slideshow-frame cinematic-reveal group relative z-10 h-full w-full overflow-hidden rounded-[1.5rem] bg-white">
+                <img src="images/a.jpeg" alt="Deepa and Sumit" fetchpriority="high" class="transition duration-700 group-hover:scale-105">
+                <img src="images/h.jpeg" alt="Deepa and Sumit" loading="lazy" decoding="async" class="transition duration-700 group-hover:scale-105">
+               <img src="images/f.jpeg" alt="Deepa and Sumit" loading="lazy" decoding="async" class="transition duration-700 group-hover:scale-105">
+               <img src="images/g.jpeg" alt="Deepa and Sumit" loading="lazy" decoding="async" class="transition duration-700 group-hover:scale-105">
+                
+                <!-- Internal Gold Dust Overlay -->
+                <div class="gold-dust-container">
+                  <div class="dust-particles"></div>
+                </div>
+            
+              </div>
             </div>
           </div>
         </div>
@@ -818,14 +962,14 @@ footer::after {
         <h2 class="mt-4 font-serif text-4xl text-forest sm:text-5xl">We look forward to celebrating with you.</h2>
 
         <div class="mx-auto mt-8 max-w-lg rounded-3xl border border-forest/10 bg-white/70 backdrop-blur-sm p-7 shadow-soft">
-          <p class="font-serif text-2xl text-forest">Mrs. Bharti Singh &amp; Mr. Gyan Sagar Singh</p>
+          <p class="font-serif text-2xl text-forest">Mrs. Kusum Devi &amp; Mr. Inderjit Singh</p>
           <p class="mt-4 text-sm leading-7 text-charcoal/60">
             Makarpura, Vadodara<br>
             Gujarat – 390014
           </p>
           <a href="tel:+919662722378" class="mt-5 inline-flex items-center gap-2 text-sm text-forest transition hover:text-sage">
             <i data-lucide="phone" class="h-4 w-4"></i>
-            +91 96627 22378
+            +91 9460536767
           </a>
         </div>
       </div>
@@ -841,10 +985,10 @@ footer::after {
         </svg>
       </div>
       <p class="text-xs font-semibold uppercase tracking-[.35em] text-sage">Save the date</p>
-      <h2 class="mt-4 font-serif text-5xl text-forest sm:text-6xl">Deepa &amp; Sumit</h2>
-      <p class="mt-5 font-serif text-2xl italic text-charcoal/65">#DeepaWedsSumit</p>
+      <h2 class="mt-4 font-serif text-5xl text-forest sm:text-6xl">Sumit &amp; Deepa</h2>
+      <p class="mt-5 font-serif text-2xl italic text-charcoal/65">#SumitWedsDeepa</p>
       <p class="mt-9 font-serif text-xl text-forest">Can’t wait to celebrate with you.</p>
-      <p class="mt-2 text-xs uppercase tracking-[.2em] text-charcoal/40">With love, Deepa &amp; Sumit</p>
+      <p class="mt-2 text-xs uppercase tracking-[.2em] text-charcoal/40">With love, Sumit &amp; Deepa</p>
       <div class="mt-12 border-t border-forest/10 pt-6 text-[10px] uppercase tracking-[.18em] text-charcoal/35">
         24 November 2026 · Vadodara, Gujarat
       </div>
@@ -859,8 +1003,7 @@ footer::after {
   
   <script>
     // =========================================================
-    // PETAL SHOWER CANVAS SIMULATION
-    // Realistic multi-layered falling petals with natural lighting
+    // PETAL SHOWER CANVAS SIMULATION (Path2D GPU Optimized)
     // =========================================================
     const canvas = document.getElementById('petal-canvas');
     const ctx = canvas.getContext('2d');
@@ -879,6 +1022,13 @@ footer::after {
       'rgba(244, 234, 230, 0.90)', // Soft ivory bloom
       'rgba(216, 185, 174, 0.75)'  // Dusky champagne pink
     ];
+
+    const optimizedPetalPath = new Path2D();
+    optimizedPetalPath.moveTo(0, 1.3);
+    optimizedPetalPath.bezierCurveTo(-0.85, 0.8, -0.95, 0.1, -0.55, -0.45);
+    optimizedPetalPath.bezierCurveTo(-0.3, -0.85, -0.1, -0.55, 0, -0.35);
+    optimizedPetalPath.bezierCurveTo(0.1, -0.55, 0.3, -0.85, 0.55, -0.45);
+    optimizedPetalPath.bezierCurveTo(0.95, 0.1, 0.85, 0.8, 0, 1.3);
 
     class Petal {
       constructor() {
@@ -899,7 +1049,7 @@ footer::after {
         this.oscillationDistance = 25 + Math.random() * 30;
         this.angle = Math.random() * Math.PI * 2;
         
-        // Depth-of-field simulation: small petals are in background, large are in foreground
+        // Depth-of-field simulation
         this.depth = Math.random();
         this.blur = this.depth > 0.85 ? 1.5 : (this.depth < 0.25 ? 0.8 : 0);
       }
@@ -920,29 +1070,18 @@ footer::after {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         
-        // Rounded flower-petal shape
-        ctx.beginPath();
-     //   ctx.moveTo(0, this.size * 1.3); 
-      //  ctx.bezierCurveTo(-this.size * 0.75, this.size * 0.75, -this.size * 0.7, -this.size * 0.25, 0, -this.size * 0.85);
-      //  ctx.bezierCurveTo(this.size * 0.7, -this.size * 0.25, this.size * 0.75, this.size * 0.75, 0, this.size * 1.3);
-       
-        //Rounded flower-petal shape
-        ctx.moveTo(0, this.size * 1.3);
-       // ctx.bezierCurveTo(-this.size * 0.75, this.size * 0.75, -this.size * 0.7, -this.size * 0.25, 0, -this.size * 0.85);
-       // ctx.bezierCurveTo(this.size * 0.7, -this.size * 0.25, this.size * 0.75, this.size * 0.75, 0, this.size * 1.3);
-        
-        ctx.bezierCurveTo(-this.size * 0.85, this.size * 0.8, -this.size * 0.95, this.size * 0.1, -this.size * 0.55, -this.size * 0.45);
-        ctx.bezierCurveTo(-this.size * 0.3, -this.size * 0.85, -this.size * 0.1, -this.size * 0.55, 0, -this.size * 0.35);
-        ctx.bezierCurveTo(this.size * 0.1, -this.size * 0.55, this.size * 0.3, -this.size * 0.85, this.size * 0.55, -this.size * 0.45);
-        ctx.bezierCurveTo(this.size * 0.95, this.size * 0.1, this.size * 0.85, this.size * 0.8, 0, this.size * 1.3);
+        ctx.scale(this.size, this.size);
 
         ctx.fillStyle = this.color;
         ctx.shadowColor = 'rgba(216, 185, 174, 0.4)';
-        ctx.shadowBlur = this.blur * 4;
-        ctx.fill();
+        ctx.shadowBlur = (this.blur * 4) / this.size; 
+        
+        ctx.fill(optimizedPetalPath);
+        
         ctx.strokeStyle = 'rgba(190, 75, 60, 0.45)';
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
+        ctx.lineWidth = 0.8 / this.size;
+        ctx.stroke(optimizedPetalPath);
+        
         ctx.restore();
       }
     }
@@ -1010,7 +1149,7 @@ footer::after {
     const countdownTimer = setInterval(updateCountdown, 1000);
 
     // =========================================================
-    // SUBTLE SCROLL REVEAL
+    // SUBTLE SCROLL REVEAL & BACK TO TOP OBSERVER (Optimized)
     // =========================================================
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1025,56 +1164,93 @@ footer::after {
 
     // Initialize icons
     lucide.createIcons();
- const music = document.getElementById("wedding-music");
-const musicToggle = document.getElementById("music-toggle");
+    
+    const music = document.getElementById("wedding-music");
+    const musicToggle = document.getElementById("music-toggle");
 
-function updateMusicControl(isPlaying, message = "") {
-  musicToggle.innerHTML = `<i data-lucide="${isPlaying ? "volume-2" : "volume-x"}"></i>`;
-  musicToggle.setAttribute(
-    "aria-label",
-    isPlaying ? "Mute wedding music" : "Play wedding music"
-  );
-  musicToggle.setAttribute(
-    "title",
-    message || (isPlaying ? "Mute wedding music" : "Play wedding music")
-  );
-  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+    function updateMusicControl(isPlaying, message = "") {
+      musicToggle.innerHTML = `<i data-lucide="${isPlaying ? "volume-2" : "volume-x"}"></i>`;
+      musicToggle.setAttribute(
+        "aria-label",
+        isPlaying ? "Mute wedding music" : "Play wedding music"
+      );
+      musicToggle.setAttribute(
+        "title",
+        message || (isPlaying ? "Mute wedding music" : "Play wedding music")
+      );
+      musicToggle.setAttribute("aria-pressed", String(isPlaying));
 
-  lucide.createIcons();
-}
-
-music.addEventListener("error", () => {
-  updateMusicControl(false, "Music file could not be loaded");
-  musicToggle.disabled = true;
-});
-
-musicToggle.addEventListener("click", async () => {
-  try {
-    if (music.paused) {
-      await music.play();
-      updateMusicControl(true);
-    } else {
-      music.pause();
-      updateMusicControl(false);
+      lucide.createIcons();
     }
-  } catch {
-    updateMusicControl(false, "Music file could not be loaded");
-    musicToggle.disabled = true;
-  }
-});
 
-const backToTop = document.getElementById("back-to-top");
+    music.addEventListener("error", () => {
+      updateMusicControl(false, "Music file could not be loaded");
+      musicToggle.disabled = true;
+    });
 
-window.addEventListener("scroll", () => {
-  backToTop.classList.toggle("visible", window.scrollY > 500);
-});
+    musicToggle.addEventListener("click", async () => {
+      try {
+        if (music.paused) {
+          await music.play();
+          updateMusicControl(true);
+        } else {
+          music.pause();
+          updateMusicControl(false);
+        }
+      } catch {
+        updateMusicControl(false, "Music file could not be loaded");
+        musicToggle.disabled = true;
+      }
+    });
 
-backToTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-});
+    const backToTop = document.getElementById("back-to-top");
+    
+    // Optmization: Using Intersection Observer instead of scroll event listeners
+    const headerObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) {
+        backToTop.classList.add("visible");
+      } else {
+        backToTop.classList.remove("visible");
+      }
+    }, { rootMargin: "500px 0px 0px 0px" });
+    
+    headerObserver.observe(document.getElementById('home'));
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    // =========================================================
+    // CINEMATIC SCROLL REVEAL LOGIC
+    // =========================================================
+    const cinematicFrame = document.getElementById('cinematic-frame');
+    if (cinematicFrame) {
+      const cinematicObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('color-bloom');
+          } else {
+            entry.target.classList.remove('color-bloom');
+          }
+        });
+      }, { threshold: 0.5 });
+      cinematicObserver.observe(cinematicFrame);
+    }
+
+    // =========================================================
+    // ELEGANT PRELOADER LOGIC
+    // =========================================================
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.classList.add('loaded');
+        document.body.classList.remove('loading-lock');
+        setTimeout(() => { preloader.style.display = 'none'; }, 1200);
+      }, 600);
+    });
   </script>
 </body>
 </html>
