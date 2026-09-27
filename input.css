@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  /* Custom Colors */
+  --color-ivory: #FAF7F2;
+  --color-champagne: #E9DDCF;
+  --color-marigold: #FFB300;
+  --color-sage: #89947D;
+  --color-blush: #D8B9AE;
+  --color-rosepetal: #E4A89B;
+  --color-forest: #26372F;
+  --color-charcoal: #282724;
+
+  /* Custom Fonts */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", Arial, sans-serif;
+
+  /* Custom Shadows */
+  --shadow-soft: 0 18px 50px rgba(38,55,47,.08);
+}
