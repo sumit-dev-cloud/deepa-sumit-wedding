@@ -16,32 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ivory: '#FAF7F2',
-            champagne: '#E9DDCF',
-            marigold: '#FFB300',
-            sage: '#89947D',
-            blush: '#D8B9AE',
-            rosepetal: '#E4A89B',
-            forest: '#26372F',
-            charcoal: '#282724'
-          },
-          fontFamily: {
-            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-            sans: ['Inter', 'Arial', 'sans-serif']
-          },
-          boxShadow: {
-            soft: '0 18px 50px rgba(38,55,47,.08)'
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="output.css">
 
   <!-- Lucide icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -1243,13 +1218,23 @@ footer::after {
     // =========================================================
     // ELEGANT PRELOADER LOGIC
     // =========================================================
-    window.addEventListener('load', () => {
+      function hidePreloader() {
       const preloader = document.getElementById('preloader');
-      setTimeout(() => {
+      if (preloader && !preloader.classList.contains('loaded')) {
         preloader.classList.add('loaded');
         document.body.classList.remove('loading-lock');
         setTimeout(() => { preloader.style.display = 'none'; }, 1200);
-      }, 600);
+      }
+    }
+
+    // Force preloader to hide after 3.5 seconds MAX, even if images are still downloading on slow 4G
+    const preloaderTimeout = setTimeout(hidePreloader, 3500);
+
+    // Hide preloader normally if everything downloads quickly
+    window.addEventListener('load', () => {
+      clearTimeout(preloaderTimeout);
+      // Add a tiny 600ms artificial delay for aesthetic transition
+      setTimeout(hidePreloader, 600);
     });
   </script>
 </body>
